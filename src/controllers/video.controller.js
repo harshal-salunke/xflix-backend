@@ -18,8 +18,15 @@ exports.getAllVideos = async (req, res) => {
       }
     }
 
-    if (contentRating && contentRating !== "Anyone") {
-      filter.contentRating = contentRating;
+    if (contentRating) {
+    const ratings = ["Anyone", "7+", "12+", "16+", "18+"];
+    const index = ratings.indexOf(contentRating);
+
+    if (index !== -1) {
+        filter.contentRating = {
+        $in: ratings.slice(0, index + 1)
+        };
+    }
     }
 
     let sortOptions = { releaseDate: -1 };
