@@ -166,8 +166,8 @@ exports.updateViews = async (req, res) => {
                 message: "\"videoId\" must be valid id" });
         }
 
-        await Video.findByIdAndUpdate(
-            videoId,
+        await Video.updateOne(
+            { _id: videoId },
             { $inc: { viewCount: 1 } }
             );
 
