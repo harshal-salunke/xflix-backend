@@ -13,21 +13,13 @@ exports.getAllVideos = async (req, res) => {
 
     if (genres) {
       const genreList = genres.split(",");
-
       if (!genreList.includes("All")) {
         filter.genre = { $in: genreList };
       }
     }
 
-    if (contentRating) {
-      const ratings = ["Anyone", "7+", "12+", "16+", "18+"];
-      const index = ratings.indexOf(contentRating);
-
-      if (index !== -1) {
-        filter.contentRating = {
-          $in: ratings.slice(0, index + 1)
-        };
-      }
+    if (contentRating && contentRating !== "Anyone") {
+      filter.contentRating = contentRating;
     }
 
     let sortOptions = { releaseDate: -1 };
